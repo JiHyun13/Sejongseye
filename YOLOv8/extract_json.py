@@ -1,8 +1,9 @@
 import json
+import os
 
-def filter_json(input_file_path, output_file_path):
+def filter_json(file_path):
     # JSON 파일 읽기
-    with open(input_file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, 'r', encoding='utf-8') as f:
         json_data = json.load(f)
 
     # 필요한 데이터 추출
@@ -28,18 +29,20 @@ def filter_json(input_file_path, output_file_path):
         }
         filtered_data["Bounding"].append(filtered_bounding)
 
-    # 새로운 JSON 파일로 저장
-    with open(output_file_path, 'w', encoding='utf-8') as f:
+    # 같은 파일에 덮어쓰기
+    with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(filtered_data, f, ensure_ascii=False, indent=4)
 
-    print(f"필터링된 JSON 파일이 '{output_file_path}'에 저장되었습니다.")
+    print(f"필터링된 내용이 '{file_path}'에 저장되었습니다.")
+
 
 # 사용자에게 파일 경로 입력 받기
-input_file_path = input("원본 JSON 파일의 경로를 입력하세요: ")
-output_file_path = input("저장할 필터링된 JSON 파일 이름을 입력하세요 (확장자 포함): ")
+data_path = input("원본 JSON 파일의 경로를 입력하세요: ")
 
-# 파일 저장 시 확장자 확인
-if not output_file_path.endswith('.json'):
-    output_file_path += '.json'
+# 폴더 내 json 파일 처리
+file_list = os.listdir(data_path)
 
-filter_json(input_file_path, output_file_path)
+for file_name in file_list:
+    if file_name.endswith('.Json'):
+        file_path = os.path.join(data_path, file_name)
+        filter_json(file_path)
