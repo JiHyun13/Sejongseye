@@ -1,6 +1,6 @@
 import json, os
 
-def convert_json_to_yolo(json_file_path, output_file_name):
+def convert_json_to_yolo(json_file_path):
     # JSON 파일 읽기
     with open(json_file_path, 'r', encoding='utf-8') as f:
         json_data = json.load(f)
@@ -35,14 +35,23 @@ def convert_json_to_yolo(json_file_path, output_file_name):
 
         yolo_data.append(f"{class_id} {x_center} {y_center} {box_width} {box_height}")
 
+    # 확장자 txt로 변경 - class, box 데이터만 일단 사용
+    base_name = os.path.splitext(json_file_path)[0]  # 확장자를 제외한 파일 이름
+    output_filename = base_name + '.txt'  # 새로운 파일 이름 (예: 원래이름.txt)
+    
     # 파일 저장
-    output_filename = output_file_name if output_file_name.endswith('.txt') else output_file_name + '.txt'
     with open(output_filename, 'w', encoding='utf-8') as f:
         for line in yolo_data:
             f.write(line + '\n')
-    print(f"YOLO 형식으로 변환된 파일이 '{output_filename}'에 저장되었습니다.")
 
-# 사용 예시
-json_file_path = '11_X001_C024_1218_0.Json'  # JSON 파일 경로를 입력하세요
-output_file_name = input("저장할 YOLO 파일 이름을 입력하세요 (확장자 제외): ")
-convert_json_to_yolo(json_file_path, output_file_name)
+# 파일 경로 입력
+json_file_path = input("원본 JSON 파일의 경로를 입력하세요: ")
+
+# 폴더 내 json 파일 처리
+file_list = os.listdir(json_file_path)
+
+for file_name in file_list:
+    if file_name.lower().endswith('.json'):
+        file_path = os.path.join(json_file_path, file_name)
+        convert_json_to_yolo(file_path)
+
