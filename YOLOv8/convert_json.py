@@ -44,14 +44,17 @@ def convert_json_to_yolo(json_file_path):
         for line in yolo_data:
             f.write(line + '\n')
 
-# 파일 경로 입력
-json_file_path = input("원본 JSON 파일의 경로를 입력하세요: ")
+# 사용자에게 상위 폴더 경로 입력 받기
+root_directory = input("JSON 파일이 있는 상위 폴더의 경로를 입력하세요: ")
 
-# 폴더 내 json 파일 처리
-file_list = os.listdir(json_file_path)
+# 폴더 내 모든 하위 디렉터리 탐색
+try:
+    for dirpath, dirnames, filenames in os.walk(root_directory):
+        for file_name in filenames:
+            if file_name.lower().endswith('.json'):  # 대소문자 구분 없이 .json 또는 .Json 파일 처리
+                file_path = os.path.join(dirpath, file_name)
+                convert_json_to_yolo(file_path)
+except Exception as e:
+    print(f"폴더를 읽는 데 오류 발생: {e}")
 
-for file_name in file_list:
-    if file_name.lower().endswith('.json'):
-        file_path = os.path.join(json_file_path, file_name)
-        convert_json_to_yolo(file_path)
-
+print("모든 파일 처리가 완료되었습니다.")
