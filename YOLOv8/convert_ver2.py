@@ -8,7 +8,13 @@ def convert_json_to_yolo(json_file_path, output_directory):
 
     # YOLO 클래스 ID 매핑 (여기서는 예시로 0을 사용)
     class_mapping = {
-        "가구류": 0  # 예시: 가구류가 클래스 0에 해당
+        "비닐류": 0,
+        "스티로폼류": 1,
+        "유리병류": 2,
+        "종이류": 3,
+        "캔류": 4,
+        "페트병류": 5,
+        "플라스틱류": 6
     }
 
     # 이미지 크기
@@ -46,8 +52,8 @@ def convert_json_to_yolo(json_file_path, output_directory):
             f.write(line + '\n')
 
 # 사용자에게 상위 폴더 경로 및 출력 폴더 경로 입력 받기
-root_directory = input("JSON 파일이 있는 상위 폴더의 경로를 입력하세요: ")
-output_directory = input("변환된 TXT 파일을 저장할 폴더의 경로를 입력하세요: ")
+root_directory = "D:/project/Sejongseye/YOLOv8/dataset/train/json/converted_json"
+output_directory = "D:/project/Sejongseye/YOLOv8/dataset/train/txt"
 
 # 폴더 내 모든 하위 디렉터리 탐색
 try:
