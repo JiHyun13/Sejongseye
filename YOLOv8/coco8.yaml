@@ -1,0 +1,14 @@
+path: D:/project/Sejongseye/YOLOv8
+train: D:/project/Sejongseye/YOLOv8/dataset/train
+val: D:/project/Sejongseye/YOLOv8/dataset/valid
+test: D:/project/Sejongseye/YOLOv8/dataset/test
+
+names:
+  0: "비닐류"
+  1: "스티로폼류"
+  2: "유리병류"
+  3: "종이류"
+  4: "캔류"
+  5: "페트병류"
+  6: "플라스틱류"
+  

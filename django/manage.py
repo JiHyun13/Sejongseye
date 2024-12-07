@@ -6,8 +6,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    # settings.py 파일의 경로를 올바르게 설정하세요
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'community_project_inner.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -19,5 +18,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

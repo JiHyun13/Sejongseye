@@ -58,9 +58,9 @@ def resize_image_and_update_json(image_path, json_path, output_directory, target
     print(f"업데이트된 JSON 파일이 '{json_path}'에 저장되었습니다.")
 
 # 사용자에게 입력 받기
-root_directory = input("jpg 파일이 있는 상위 폴더의 경로를 입력하세요: ")
-output_directory = input("필터링된 jpg 파일을 저장할 폴더의 경로를 입력하세요: ")
-json_directory = input("JSON 파일이 있는 폴더의 경로를 입력하세요: ")
+root_directory = r"D:\project\Sejongseye\YOLOv8\dataset\train\image"
+output_directory = r"D:\project\Sejongseye\YOLOv8\dataset\train\converted_image"
+json_directory = r"D:\project\Sejongseye\YOLOv8\dataset\train\json\converted_json"
 
 # 리사이즈할 크기 설정
 target_size = (640, 640)  # 예: 640x640

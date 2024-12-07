@@ -80,8 +80,8 @@ def filter_json(file_path, output_directory, error_log):
 
 
 # 사용자에게 상위 폴더 경로 입력 받기
-root_directory = input("JSON 파일이 있는 상위 폴더의 경로를 입력하세요: ")
-output_directory = input("필터링된 JSON 파일을 저장할 폴더의 경로를 입력하세요: ")
+root_directory = r"D:\project\Sejongseye\YOLOv8\dataset\validation\json_before"
+output_directory = r"D:\project\Sejongseye\YOLOv8\dataset\validation\json"
 
 error_log = []  # 오류 로그 리스트 초기화
 
