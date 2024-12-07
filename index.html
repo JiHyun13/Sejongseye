@@ -22,6 +22,8 @@
 		.info .title {
 		    font-weight: bold;
 		}
+    .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+    .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
 	</style>
 	
 </head>
@@ -47,7 +49,7 @@
 	}); 
 	
 	// 2) getJSON 메소드를 이용해 JSON 파일을 파싱함
-	$.getJSON("polygon.json", function(geojson) {
+	$.getJSON("resource/polygon.json", function(geojson) {
 		var units = geojson.features; // 파일에서 key값이 "features"인  것의 value를 통으로 가져옴(이것은 여러지역에 대한 정보를 모두 담고있음)			
 		$.each(units, function(index, unit) { // 1개 지역씩 꺼내서 사용함. val은 그 1개 지역에 대한 정보를 담음
 			var coordinates = []; //좌표 저장할 배열
@@ -81,7 +83,43 @@
 	var map = new kakao.maps.Map(mapContainer, mapOption),
     customOverlay = new kakao.maps.CustomOverlay({}),
     infowindow = new kakao.maps.InfoWindow({removable: true});
-	
+
+  /* 3. 지도에 커스텀 오버레이와 마커 이미지를 이용해 마커를 표시합니다. 추후 서버와 연동 후 저장 기능 구현 가능.*/
+  function setMarker(){
+  var imageSrc = 'resource/pin.png',
+    imageSize = new kakao.maps.Size(34, 35), 
+    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+  // 3-1.마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+    markerPosition = new kakao.maps.LatLng(37.550870, 127.0755272); // 마커가 표시될 위치입니다
+
+  // 3-2.마커를 생성합니다
+  var marker = new kakao.maps.Marker({
+  position: markerPosition,
+  image: markerImage // 마커이미지 설정 
+  });
+
+  // 4-3.마커가 지도 위에 표시되도록 설정합니다
+  marker.setMap(map);  
+  var content = '<div class="customoverlay">' +
+    '  <a href="https://kko.kakao.com/e5-8pXPYeK" target="_blank">' +
+    '    <span class="title">세종대학교 대양AI센터</span>' +
+    '  </a>' +
+    '</div>';
+
+    // 커스텀 오버레이가 표시될 위치입니다 
+    var position = new kakao.maps.LatLng(37.551290, 127.0755272);  
+
+    // 4-4.커스텀 오버레이를 생성합니다
+    var customOverlay = new kakao.maps.CustomOverlay({
+        map: map,
+        position: position,
+        content: content,
+        yAnchor: 1 
+    });
+  }
+	setMarker();
 	/* 3. 폴리곤 도형을 지도위에 띄우고 마우스 이벤트 붙이기 */
 	
 	// 지도에 영역데이터를 폴리곤으로 표시합니다 
@@ -106,7 +144,7 @@
 	    // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
 	    // 지역명을 표시하는 커스텀오버레이를 지도위에 표시합니다
 	    kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
-	        polygon.setOptions({fillColor: '#09f'});
+	        polygon.setOptions({fillColor: '#09f',fillOpacity: 0.8});
 
 	        customOverlay.setContent('<div class="area">' + area.name + '</div>');
 	        
@@ -123,8 +161,9 @@
 	    // 다각형에 mouseout 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 원래색으로 변경합니다
 	    // 커스텀 오버레이를 지도에서 제거합니다 
 	    kakao.maps.event.addListener(polygon, 'mouseout', function() {
-	        polygon.setOptions({fillColor: '#fff'});
+	        polygon.setOptions({fillColor: '#fff',fillOpacity: 0.8});
 	        customOverlay.setMap(null);
+
 	    }); 
 
 	    // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 다각형의 이름과 면적을 인포윈도우에 표시합니다 
@@ -139,7 +178,7 @@
 	        infowindow.setMap(map);
 	    });
 	}
-	
+
 </script>
 </body>
 </html>
