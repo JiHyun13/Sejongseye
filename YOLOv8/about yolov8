@@ -2,3 +2,5 @@ to do list
 
 yolo 는 작동했지만, bounding box가 잘 작동했는지 확인할 수 없었다.
 train 셋의 label 에 문제가 있는 것으로 판단되어 valid 데이터를 재분배하여 진행할 것이다.
+
+재확인 결과 kernel 에 문제가 있음을 확인하였고, 이에 모델을 다시 짰다.
